@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ProblemSample": {
+      "commandName": "Project",
+      "commandLineArgs": "3"
+    }
+  }
+}
