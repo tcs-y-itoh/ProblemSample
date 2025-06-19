@@ -13,7 +13,7 @@ namespace ProblemSample.Questions
         public string Execute(ReadOnlySpan<string> args)
         {
             const int start = 1;
-            const int end = 1000000000;
+            const int end = 100;
 
             return string.Join($",{Environment.NewLine}", GetPrimeNumbers(start, end));
 
