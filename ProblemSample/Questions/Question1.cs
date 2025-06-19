@@ -1,9 +1,9 @@
-﻿namespace ProblemSample.Questions
+namespace ProblemSample.Questions
 {
     /// <summary>
     /// Q1. 1から100までの数のうち、素数のみ出力するプログラムを作成せよ
     /// </summary>
-    internal class Question1 : IQuestion
+    internal class Question1: IQuestion
     {
         /// <summary>
         /// 結果取得
@@ -13,7 +13,7 @@
         public string Execute(ReadOnlySpan<string> args)
         {
             const int start = 1;
-            const int end = 100;
+            const int end = 1000000000;
 
             return string.Join($",{Environment.NewLine}", GetPrimeNumbers(start, end));
 
@@ -27,44 +27,34 @@
         /// <returns>素数リスト</returns>
         private static IEnumerable<int> GetPrimeNumbers(int start, int end)
         {
-            foreach (var number in Enumerable.Range(start, end))
+            if (end < 2 || start > end)
             {
-                if (IsPrime(number))
-                {
-                    yield return number;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 素数判定
-        /// </summary>
-        /// <param name="number">数値</param>
-        /// <returns>true：素数 false：素数ではない</returns>
-        private static bool IsPrime(int number)
-        {
-            if (number < 2)
-            {
-                return false;
+                yield break;
             }
 
-            var judgeArray = new bool[number + 1];
-            var limit = (int)Math.Sqrt(number);
+            var isPrimeArray = Enumerable.Range(0, end + 1).Select(x => true).ToArray();
+            var limit = (int)Math.Sqrt(end);
 
             for (var i = 2; i <= limit; i++)
             {
-                if (judgeArray[i])
+                if (!isPrimeArray[i])
                 {
                     continue;
                 }
 
-                for (var j = i * i; j <= number; j += i)
+                for (var j = i * i; j <= end; j += i)
                 {
-                    judgeArray[j] = true;
+                    isPrimeArray[j] = false;
                 }
             }
 
-            return !judgeArray[number];
+            for (var i = Math.Max(start, 2); i <= end; i++)
+            {
+                if (isPrimeArray[i])
+                {
+                    yield return i;
+                }
+            }
         }
     }
 }
